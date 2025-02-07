@@ -15,6 +15,7 @@ import { RichTextPlugin } from '@lexical/react/LexicalRichTextPlugin';
 import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
 import { TabIndentationPlugin } from '@lexical/react/LexicalTabIndentationPlugin';
 import { TableCellNode, TableNode, TableRowNode } from '@lexical/table';
+import { ListNode, ListItemNode } from '@lexical/list';
 import { EditorState, LexicalEditor } from 'lexical';
 import { useEffect, useState } from 'react';
 
@@ -27,7 +28,7 @@ import { MaxLengthPlugin } from './plugins/MaxLengthPlugin';
 const initialConfig = {
   editorState: undefined,
   namespace: 'Editor',
-  nodes: [TableNode, TableCellNode, TableRowNode],
+ nodes: [TableNode, TableCellNode, TableRowNode, ListNode, ListItemNode],
   // Handling of errors during update
   onError(error: Error) {
     console.log(error);
