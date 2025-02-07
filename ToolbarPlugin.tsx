@@ -19,7 +19,7 @@ import {
   UNDO_COMMAND,
   LexicalEditor,
 } from 'lexical';
-import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND } from '@lexical/list';
+import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, insertList } from '@lexical/list';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -78,6 +78,22 @@ export default function ToolbarPlugin() {
         (payload) => {
           setCanRedo(payload);
           return false;
+        },
+        LowPriority
+      ),
+      editor.registerCommand(
+        INSERT_ORDERED_LIST_COMMAND,
+        () => {
+          insertList(editor, 'number');
+          return true;
+        },
+        LowPriority
+      ),
+      editor.registerCommand(
+        INSERT_UNORDERED_LIST_COMMAND,
+        () => {
+          insertList(editor, 'bullet');
+          return true;
         },
         LowPriority
       )
@@ -171,7 +187,26 @@ export default function ToolbarPlugin() {
       >
         <i className="format right-align" />
       </button>
-      <Divider/>
+      <Divider />
+      <button
+        onClick={() => {
+          editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+        }}
+        className="toolbar-item spaced"
+        aria-label="List Bullet"
+      >
+        <i className="format list-ul" />
+      </button>
+      <button
+        onClick={() => {
+          editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+        }}
+        className="toolbar-item spaced"
+        aria-label="List Number"
+      >
+        <i className="format list-ol" />
+      </button>
+      <Divider />
       <button
         onClick={() => {
           editor.dispatchCommand(INSERT_TABLE_COMMAND, {
