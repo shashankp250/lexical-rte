@@ -19,7 +19,11 @@ import {
   UNDO_COMMAND,
   LexicalEditor,
 } from 'lexical';
-import { INSERT_ORDERED_LIST_COMMAND, INSERT_UNORDERED_LIST_COMMAND, insertList } from '@lexical/list';
+import {
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  insertList,
+} from '@lexical/list';
 import { INSERT_TABLE_COMMAND } from '@lexical/table';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -82,17 +86,17 @@ export default function ToolbarPlugin() {
         LowPriority
       ),
       editor.registerCommand(
-        INSERT_ORDERED_LIST_COMMAND,
+        INSERT_UNORDERED_LIST_COMMAND,
         () => {
-          insertList(editor, 'number');
+          insertList(editor, 'bullet');
           return true;
         },
         LowPriority
       ),
       editor.registerCommand(
-        INSERT_UNORDERED_LIST_COMMAND,
+        INSERT_ORDERED_LIST_COMMAND,
         () => {
-          insertList(editor, 'bullet');
+          insertList(editor, 'number');
           return true;
         },
         LowPriority
@@ -210,12 +214,12 @@ export default function ToolbarPlugin() {
       <button
         onClick={() => {
           editor.dispatchCommand(INSERT_TABLE_COMMAND, {
-            columns: '5',
-            rows: '5',
+            columns: '3',
+            rows: '3',
           });
         }}
         className="toolbar-item"
-        aria-label="Justify Align"
+        aria-label="Insert table"
       >
         <i className="format table"></i>
       </button>
